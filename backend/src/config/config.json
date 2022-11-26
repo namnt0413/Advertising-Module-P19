@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "test",
+    "database": "sp19_ads",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging" : false,
