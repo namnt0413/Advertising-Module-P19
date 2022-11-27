@@ -127,7 +127,39 @@ let updateAds = (data) => {
     })
 }
 
+let getDetailAds = (adsId) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if( !adsId ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameter',
+                })
+            } else {
+
+                let data = await db.Advertisement.findOne({ 
+                    where: { 
+                        id : adsId 
+                    },
+                    attributes: {
+                        exclude: ['createdAt','updatedAt']
+                    }
+                })
+                // data.image = Buffer.from(data.image,'base64').toString('binary'); // convert image to base64
+            
+                resolve({
+                    errCode: 0,
+                    errMessage: 'OK',
+                    data: data,
+                })
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
 module.exports = {
-    createAds, getAllAds, deleteAds, updateAds
+    createAds, getAllAds, deleteAds, updateAds, getDetailAds
 }
