@@ -16,7 +16,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       visitTime: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       image: {
         type: Sequelize.BLOB('long')

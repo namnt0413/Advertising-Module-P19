@@ -1,16 +1,17 @@
 import express from "express";
-import homeController from "../controllers/homeController";
+import adsController from "../controllers/adsController";
+
 
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-    router.get('/', homeController.getHomePage);
+    router.get('/', adsController.getHomePage);
 
-    // router.post('/api/login', userController.handleLogin);
-    // router.get('/api/get-all-users', userController.handleGetAllUsers);
-    // router.post('/api/create-new-user', userController.handleCreateNewUser);
-    // router.put('/api/edit-user', userController.handleEditUser);
-    // router.delete('/api/delete-user', userController.handleDeleteUser);
+    router.post('/api/create-ads', adsController.createAds);
+    router.get('/api/get-all-ads', adsController.getAllAds);
+    router.delete('/api/delete-ads', adsController.deleteAds);
+    router.put('/api/update-ads', adsController.updateAds);
+    router.get('/api/detail-ads', adsController.getDetailAds);
 
     return app.use("/", router);
 }
