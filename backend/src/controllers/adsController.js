@@ -52,7 +52,18 @@ let deleteAds = async (req, res) => {
 }
 
 let updateAds = async (req, res) => {
-    return res.render('homepage.ejs')
+    try {
+        let data = req.body;
+        // console.log(data)
+        let response = await adsService.updateAds(data);
+        return res.status(200).json(response)
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
 }
 
 let getDetailAds = async (req, res) => {

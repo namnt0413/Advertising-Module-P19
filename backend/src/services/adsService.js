@@ -87,7 +87,47 @@ let deleteAds = (adsId) => {
     })
 }
 
+let updateAds = (data) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(!data.id){
+                resolve({
+                    errCode:2,
+                    errMessage: 'Missing required parameter'
+                })
+            }
+            
+            let advertisement = await db.Advertisement.findOne({ // where id = data.id
+                where: { id : data.id},
+                raw: false // tat hien thi object cua sequelize di
+            })
+
+           if( advertisement){
+            advertisement.name = data.name;
+            advertisement.content = data.content;
+            advertisement.visitTime = data.visitTime;
+            advertisement.startedAt = data.startedAt;
+            advertisement.finishedAt = data.finishedAt;
+
+            await advertisement.save(); // luu vao database , doc docs
+                resolve({
+                    errCode: 0,
+                    message: 'Update advertisement successfully'
+                })
+           }
+           else{
+                resolve({
+                    errCode: 1,
+                    message: 'Update advertisement failed'
+                });
+           } 
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 module.exports = {
-    createAds, getAllAds, deleteAds
+    createAds, getAllAds, deleteAds, updateAds
 }
