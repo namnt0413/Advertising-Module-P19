@@ -31,7 +31,34 @@ let createAds = (data) => {
     })
 }
 
+let getAllAds = () => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            let data = await db.Advertisement.findAll({
+                attributes: 
+                [ 'id', 'name','content','startedAt','finishedAt','createdAt', 'updatedAt'
+                ]
+            });
+            // if(data && data.length > 0) {
+            //     data.map( item => {
+            //         item.image = Buffer.from(item.image,'base64').toString('binary'); // convert image to base64
+            //         return item;
+            //     })
+            // }
+            // console.log(data);
+            resolve({
+                errCode: 0,
+                errMessage: 'OK',
+                data
+            })
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 
 module.exports = {
-    createAds, 
+    createAds, getAllAds
 }
