@@ -39,7 +39,16 @@ let getAllAds = async (req, res) => {
 }
 
 let deleteAds = async (req, res) => {
-    return res.render('homepage.ejs')
+    try {
+        let response = await adsService.deleteAds(req.body.id);
+        return res.status(200).json(response)
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
 }
 
 let updateAds = async (req, res) => {
