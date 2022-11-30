@@ -112,8 +112,8 @@
 //             })
 //             if(!user) {
 //                 resolve({
-//                     errCode:2,
-//                     errMessage:`The user isn't exist`
+//                     error_code:2,
+//                     error_msg:`The user isn't exist`
 //                 })
 //             }
 

@@ -1,13 +1,28 @@
 import db from '../models/index';
 import adsService from '../services/adsService'
 
-
-let getHomePage = async (req, res) => {
-    return res.render('homepage.ejs')
+let getAllAds = async (req, res) => {
+    try {
+        let data = await adsService.getAllAds();
+        // console.log('-------------------------------------');
+        // console.log(data);
+        // console.log('-------------------------------------');
+        return res.render('show.ejs', {
+            adsProduct: data
+        })
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            error_code: -1,
+            error_msg: 'Error from server'
+        })
+    }
+    // return res.render('homepage.ejs')
 }
 
-let getAboutPage = (req, res) => {
-    return res.render('test/about.ejs'); // render ra about page
+// crud ads 
+let addAds = (req, res) => {
+    return res.render('add.ejs'); // render
 }
 
 let createAds = async (req, res) => {
@@ -17,27 +32,8 @@ let createAds = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
-        })
-    }
-    // return res.render('homepage.ejs')
-}
-
-let getAllAds = async (req, res) => {
-    try {
-        let data = await adsService.getAllAds();
-        // console.log('-------------------------------------');
-        // console.log(data);
-        // console.log('-------------------------------------');
-        return res.render('Ads_product/show.ejs', {
-            adsProduct: data
-        })
-    } catch (error) {
-        console.error(error);
-        return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
     // return res.render('homepage.ejs')
@@ -50,10 +46,20 @@ let deleteAds = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
+}
+
+let getDetailAds = async (req, res) => {
+    
+    let data = await adsService.getDetailAds(req.query.id);
+    // console.log((data.adsData))
+    return res.render('edit.ejs', {
+        ads: data
+    }) 
+
 }
 
 let updateAds = async (req, res) => {
@@ -65,25 +71,13 @@ let updateAds = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
 }
 
-let getDetailAds = async (req, res) => {
-    try {
-        let response = await adsService.getDetailAds(req.query.id);
-        return res.status(200).json(response)
-    } catch (error) {
-        console.error(error);
-        return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
-        })
-    }
-    // return res.render('homepage.ejs')
-}
+
 
 let createAdsApi = async (req, res) => {
     try {
@@ -92,8 +86,8 @@ let createAdsApi = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
     // return res.render('homepage.ejs')
@@ -106,8 +100,8 @@ let getAllAdsApi = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
     // return res.render('homepage.ejs')
@@ -120,8 +114,8 @@ let deleteAdsApi = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
 }
@@ -135,8 +129,8 @@ let updateAdsApi = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
 }
@@ -148,8 +142,8 @@ let getDetailAdsApi = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(200).json({
-            errCode: -1,
-            errMessage: 'Error from server'
+            error_code: -1,
+            error_msg: 'Error from server'
         })
     }
     // return res.render('homepage.ejs')
@@ -157,7 +151,6 @@ let getDetailAdsApi = async (req, res) => {
 
 
 module.exports = {
-    getHomePage, getAboutPage,
-    createAds , getAllAds , deleteAds, updateAds, getDetailAds,
+    getAllAds, addAds , createAds , deleteAds, updateAds , getDetailAds ,
     createAdsApi , getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
 }
