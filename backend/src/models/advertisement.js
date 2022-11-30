@@ -18,8 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
     visitTime: DataTypes.INTEGER,
     image: DataTypes.STRING,
-    startedAt: DataTypes.STRING,
-    finishedAt: DataTypes.STRING,
+    type: DataTypes.INTEGER,
+    product_id: DataTypes.INTEGER,
+    startedAt: DataTypes.DATE,
+    finishedAt: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'Advertisement',

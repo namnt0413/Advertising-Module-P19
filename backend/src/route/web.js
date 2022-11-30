@@ -7,8 +7,8 @@ let router = express.Router();
 let initWebRoutes = (app) => {
     router.get('/', adsController.getHomePage);
 
-    router.post('/create-ads', adsController.createAds);
     router.get('/get-all-ads', adsController.getAllAds);
+    router.post('/create-ads', adsController.createAds);
     router.delete('/delete-ads', adsController.deleteAds);
     router.put('/update-ads', adsController.updateAds);
     router.get('/detail-ads', adsController.getDetailAds);

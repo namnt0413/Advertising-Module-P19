@@ -36,7 +36,7 @@ let getAllAds = () => {
         try {
             let data = await db.Advertisement.findAll({
                 attributes: 
-                [ 'id', 'name','content', 'visitTime' , 'startedAt','finishedAt','createdAt', 'updatedAt'
+                [ 'id', 'name','content', 'visitTime' , 'type' , 'product_id' , 'startedAt','finishedAt','createdAt', 'updatedAt'
                 ]
             });
             // if(data && data.length > 0) {

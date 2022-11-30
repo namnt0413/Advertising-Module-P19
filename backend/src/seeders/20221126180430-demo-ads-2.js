@@ -19,6 +19,8 @@ module.exports = {
         content: 'Tặng ngay Màn hình cong 24”',
         visitTime: 20,
         image: '',
+        type: 1,
+        product_id: 1,
         startedAt: "2022-11-27",
         finishedAt: "2022-11-29",
 
@@ -30,6 +32,7 @@ module.exports = {
         content: 'Mua 1 tặng 1 chốt thêm quà đậm',
         visitTime: 30,
         image: '',
+        type: 1,
         startedAt: "2022-12-12",
         finishedAt: "2022-12-24",
 
