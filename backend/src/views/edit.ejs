@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinh sua Quang cao</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <form action="/admin/update-ads" method="POST">
+                <div class="form-row align-center">
+                    <div class="col-12 mt-3">
+                        <h3>Chinh sua Quang cao</h3>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Ten quang cao</label>
+                        <input id ="ads-name" type="text" class="form-control" name="name" value="<%= ads.name %>">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Anh</label>
+                        <input type="text" class="form-control" name="image" placeholder="image" value="">
+                    </div>
+                </div>
+                <div class="form-row align-center">
+                    <div class="form-group col-md-12">
+                        <label for="ads-content">Noi dung</label>
+                        <input id="ads-content" type="text" class="form-control" name="content" placeholder="Content" value="<%= ads.content %>">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="start-date">Ngay bat dau</label>
+                        <input id="start-date" class="form-control" type="date"  name="startedAt" value="<%= ads.startedAt %>">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="start-date">Ngay ket thuc</label>
+                        <input id="finish-date" class="form-control" type="date"  name="finishedAt" value="<%= ads.finishedAt %>">
+                    </div>
+                </div>
+
+                <div class="col-12 mt-5">
+                    <h3>San pham trong su kien</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputState">San pham</label>
+                            <% if(ads.type == 2) { %>
+                                <select id="product"  name="product" class="form-control" multiple>
+                                    <%
+                                        var object = [ 
+                                            {id:  1, name : 'Iphone'} , 
+                                            {id:  2, name : 'Samsung'} ,
+                                            {id:  3, name : 'Oppo'} ,
+                                            {id:  4, name : 'Xiaomi'} ,
+                                            {id:  5, name : 'Nokia'} ,
+                                        ]
+                                        for ( var i = 0; i < object.length; i++ ) {
+                                            var selected = "" 
+                                            ads.adsData.map( item => {
+                                                if (item.product_id === object[i].id ) selected="selected"; return selected;
+                                            })
+                                    %>
+                                            <option value="<%=object[i].id %>" <%=selected%>><%=object[i].id %> - <%=object[i].name %></option>
+                                    <%  }   %>
+                                    </select>
+                            <% } else { %>
+                                <select id="product_id"  name="product_id" class="form-control">
+                                <%
+                                    var object = [ 
+                                        {id:  1, name : 'Iphone'} , 
+                                        {id:  2, name : 'Samsung'} ,
+                                        {id:  3, name : 'Oppo'} ,
+                                        {id:  4, name : 'Xiaomi'} ,
+                                        {id:  5, name : 'Nokia'} ,
+                                    ]
+                                    for ( var i = 0; i < object.length; i++ ) {
+                                        var selected = ( ads.product_id == object[i].id ) ? "selected" : "";
+                                %>
+                                        <option value="<%=object[i].id %>" <%=selected %>><%=object[i].id %> - <%=object[i].name %></option>
+                                <%  }   %>
+                                </select>
+                            <% } %>
+
+                        </div>
+                    </div>
+                </div>
+
+                <input type="text" name="id" value="<%=ads.id %>" hidden>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
