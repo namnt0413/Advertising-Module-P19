@@ -28,7 +28,10 @@ let addAds = (req, res) => {
 let createAds = async (req, res) => {
     try {
         let response = await adsService.createAds(req.body);
-        return res.status(200).json(response)
+        // return res.status(200).json(response)
+        return res.render('add_product.ejs', {
+            ads: response.data
+        })
     } catch (error) {
         console.error(error);
         return res.status(200).json({
@@ -36,7 +39,20 @@ let createAds = async (req, res) => {
             error_msg: 'Error from server'
         })
     }
-    // return res.render('homepage.ejs')
+}
+
+let createAdsProduct = async (req, res) => {
+    try {
+        let response = await adsService.createAdsProduct(req.body);
+        return res.status(200).json(response)
+        // return res.render('add_product.ejs')
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            error_code: -1,
+            error_msg: 'Error from server'
+        })
+    }
 }
 
 let deleteAds = async (req, res) => {
@@ -52,9 +68,9 @@ let deleteAds = async (req, res) => {
     }
 }
 
-let getDetailAds = async (req, res) => {
+let editAds = async (req, res) => {
     
-    let data = await adsService.getDetailAds(req.query.id);
+    let data = await adsService.editAds(req.query.id);
     // console.log((data.adsData))
     return res.render('edit.ejs', {
         ads: data
@@ -151,6 +167,6 @@ let getDetailAdsApi = async (req, res) => {
 
 
 module.exports = {
-    getAllAds, addAds , createAds , deleteAds, updateAds , getDetailAds ,
+    getAllAds, addAds , createAds , createAdsProduct,  deleteAds, updateAds , editAds ,
     createAdsApi , getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
 }

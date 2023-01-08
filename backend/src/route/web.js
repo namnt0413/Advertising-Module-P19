@@ -6,13 +6,15 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
 
-    router.get('/get-all-ads', adsController.getAllAds);
+    router.get('/admin/get-all-ads', adsController.getAllAds);
 
-    router.get('/add-ads', adsController.addAds);    
-    router.post('/create-ads', adsController.createAds);
-    router.get('/detail-ads', adsController.getDetailAds);
-    router.post('/update-ads', adsController.updateAds);
-    router.delete('/delete-ads', adsController.deleteAds);
+    router.get('/admin/add-ads', adsController.addAds);    
+    router.post('/admin/create-ads', adsController.createAds);
+    router.post('/admin/create-ads-product', adsController.createAdsProduct);
+
+    router.get('/admin/edit-ads', adsController.editAds);
+    router.post('/admin/update-ads', adsController.updateAds);
+    router.delete('/admin/delete-ads', adsController.deleteAds);
 
     router.post('/api/create-ads', adsController.createAdsApi);
     router.get('/api/get-all-ads', adsController.getAllAdsApi);

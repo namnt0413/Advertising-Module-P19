@@ -27,7 +27,7 @@ let getAllAds = () => {
 
 let createAds = (data) => {
     return new Promise( async (resolve, reject) => {
-        // console.log(data);
+        console.log(data);
         try {
             if( !data.name || !data.content || !data.type || !data.startedAt || !data.finishedAt ) {
                 resolve({
@@ -43,12 +43,42 @@ let createAds = (data) => {
                     startedAt: data.startedAt,
                     finishedAt: data.finishedAt
                 })
-
+                let ads = await db.Advertisement.findOne({
+                    order: [ [ 'id', 'DESC' ]],
+                    });
                 resolve({
+                    data: ads,
                     error_code: 0,
                     error_msg: 'Create new advertisement successfully'
                 })
             }
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let createAdsProduct = (data) => {
+    console.log(data);
+    return new Promise( async (resolve, reject) => {
+        try {
+            let products = data.product
+            let result = []
+            products.map( item => {
+                let object = {};
+                object.ads_id = data.id;
+                object.product_id = item;
+                return result.push(object);
+            })
+            console.log(result)
+            if(products && products.length > 0){
+                await db.ads_product.bulkCreate(result);
+            }  
+            resolve({
+                error_code: 0,
+                error_msg: 'Create products in advertisement successfully'
+            })
 
         } catch (error) {
             reject(error);
@@ -86,7 +116,7 @@ let deleteAds = (adsId) => {
 }
 
 let updateAds = (data) => {
-    // console.log(data);
+    console.log(data);
     return new Promise( async (resolve, reject) => {
         try {
             if(!data.id){
@@ -121,14 +151,6 @@ let updateAds = (data) => {
                 advertisement.finishedAt = data.finishedAt;
 
                 await advertisement.save(); // luu vao database , doc docs
-                // await db.ads_product.create({
-                //     ads_id: data.id,
-                //     content: data.content,
-                //     type: data.type,
-                //     visitTime: 0,
-                //     startedAt: data.startedAt,
-                //     finishedAt: data.finishedAt
-                // })
                 
                 let products = data.product
                 let result = []
@@ -138,7 +160,7 @@ let updateAds = (data) => {
                     object.product_id = item;
                     return result.push(object);
                 })
-                console.log(result)
+                // console.log(result)
                 if(products && products.length > 0){
                     await db.ads_product.bulkCreate(result);
                 }  
@@ -158,10 +180,10 @@ let updateAds = (data) => {
     })
 }
 
-let getDetailAds = (adsId) => {
+let editAds = (adsId) => {
     return new Promise( async (resolve, reject) => {
         try {
-            let ads = await db.Advertisement.findOne({  // bat dong bo do tim user mat t gian
+            let ads = await db.Advertisement.findOne({  
                 where:{ id : adsId},
                 include: [
                     { model: db.ads_product, as: 'adsData', attributes: ['product_id'] },
@@ -346,6 +368,6 @@ let getDetailAdsApi = (adsId) => {
 
 
 module.exports = {
-    getAllAds, createAds,  deleteAds, updateAds, getDetailAds,
+    getAllAds, createAds, createAdsProduct,  deleteAds, updateAds, editAds,
     createAdsApi, getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
 }

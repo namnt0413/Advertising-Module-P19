@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo quảng cáo</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <form action="/admin/create-ads-product" method="POST">
+                <%  if (ads.type == 1) {     %>
+                          <legend>Sản phẩm mới ra mắt</legend>
+                <%  } else if (ads.type == 2) {      %>
+                            <legend>Sản phẩm bán chạy trong tháng</legend>
+                <%  } else if (ads.type == 3) {     %>
+                            <legend>Sản phẩm đang giảm giá</legend>
+                <%  }   else  {   %>
+                            <legend>Sự kiện đặc biệt</legend>
+                <%    }     %>
+                <select id="product"  name="product" class="form-control" multiple>
+                    <%
+                        var object = [ 
+                            {id:  1, name : 'Iphone'} , 
+                            {id:  2, name : 'Samsung'} ,
+                            {id:  3, name : 'Oppo'} ,
+                            {id:  4, name : 'Xiaomi'} ,
+                            {id:  5, name : 'Nokia'} ,
+                        ]
+                        for ( var i = 0; i < object.length; i++ ) {
+                    %>
+                            <option value="<%=object[i].id %>"><%=object[i].id %> - <%=object[i].name %></option>
+                    <%  }   %>
+                </select>
+                <input type="text" name="id" value="<%=ads.id %>" hidden>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+
+
+    </div>
+</body>
+    
+
+</html>
