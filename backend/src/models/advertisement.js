@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     type: DataTypes.INTEGER,
     product_id: DataTypes.INTEGER,
-    startedAt: DataTypes.DATE,
-    finishedAt: DataTypes.DATE,
+    startedAt: DataTypes.STRING,
+    finishedAt: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Advertisement',

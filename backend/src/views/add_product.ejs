@@ -32,7 +32,12 @@
                 <%  }   else  {   %>
                             <legend>Sự kiện đặc biệt</legend>
                 <%    }     %>
+
+                <% if(ads.type == 4) { %>
                 <select id="product"  name="product" class="form-control" multiple>
+                <% } else { %>
+                <select id="product"  name="product" class="form-control">
+                <% } %>
                     <%
                         var object = [ 
                             {id:  1, name : 'Iphone'} , 
@@ -47,6 +52,7 @@
                     <%  }   %>
                 </select>
                 <input type="text" name="id" value="<%=ads.id %>" hidden>
+                <input type="text" name="type" value="<%=ads.type %>" hidden>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
