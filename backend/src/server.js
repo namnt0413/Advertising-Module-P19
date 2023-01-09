@@ -3,17 +3,14 @@ import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import initWebRoutes from './route/web';
 import connectDB from './config/conectDB';
-// import cors from 'cors';
 require('dotenv').config();
 
 let app = express();
-// app.use(cors({ origin: true }));
-//config app
 
 app.use(function (req, res, next) {//middleware
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -28,7 +25,6 @@ app.use(function (req, res, next) {//middleware
     // Pass to next layer of middleware
     next();
 });
-
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }))

@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <form action="/admin/update-ads" method="POST">
+            <form action="/admin/update-ads" enctype="multipart/form-data" method="POST">
                 <div class="form-row align-center">
                     <div class="col-12 mt-3">
                         <h3>Chinh sua Quang cao</h3>
@@ -31,8 +31,8 @@
                         <input id ="ads-name" type="text" class="form-control" name="name" value="<%= ads.name %>">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputPassword4">Anh</label>
-                        <input type="text" class="form-control" name="image" placeholder="image" value="">
+                        <label for="image">Anh</label>
+                        <input type="file" class="form-control" name="image" placeholder="image" value="">
                     </div>
                 </div>
                 <div class="form-row align-center">

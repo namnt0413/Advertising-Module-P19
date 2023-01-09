@@ -27,6 +27,8 @@ let addAds = (req, res) => {
 
 let createAds = async (req, res) => {
     try {
+        req.body.image = '\\' + req.file.path.split('\\').slice(2).join('\\');
+        // console.log(req.body.image)
         let response = await adsService.createAds(req.body);
         // return res.status(200).json(response)
         return res.render('add_product.ejs', {
@@ -57,7 +59,7 @@ let createAdsProduct = async (req, res) => {
 
 let deleteAds = async (req, res) => {
     try {
-        let response = await adsService.deleteAds(req.body.id);
+        let response = await adsService.deleteAds(req.query.id);
         return res.status(200).json(response)
     } catch (error) {
         console.error(error);
@@ -80,6 +82,9 @@ let editAds = async (req, res) => {
 
 let updateAds = async (req, res) => {
     try {
+        ( req.file !== undefined ) ?
+            ( req.body.image = '\\' + req.file.path.split('\\').slice(2).join('\\') ) : (req.body.image = '');
+        
         let data = req.body;
         // console.log(data)
         let response = await adsService.updateAds(data);
