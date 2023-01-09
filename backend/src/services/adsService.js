@@ -40,6 +40,7 @@ let createAds = (data) => {
                     content: data.content,
                     type: data.type,
                     visitTime: 0,
+                    image: data.image,
                     startedAt: data.startedAt,
                     finishedAt: data.finishedAt
                 })
@@ -111,6 +112,9 @@ let deleteAds = (adsId) => {
             await db.Advertisement.destroy({
                 where: { id : adsId }
             })
+            await db.ads_product.destroy({
+                where: { ads_id : adsId }
+            })
 
             resolve({
                 error_code:0,
@@ -124,7 +128,7 @@ let deleteAds = (adsId) => {
 }
 
 let updateAds = (data) => {
-    console.log(data);
+    // console.log(data);
     return new Promise( async (resolve, reject) => {
         try {
             if(!data.id){
@@ -138,6 +142,9 @@ let updateAds = (data) => {
                 where: { id : data.id},
                 raw: false // tat hien thi object cua sequelize di
             })
+            if( data.image !== '' ) {
+                advertisement.image = data.image;
+            }
 
             if( advertisement.type == 4 ){
                 advertisement.name = data.name;

@@ -53,6 +53,16 @@
 </style>
 
 <body>
+    <%
+    function convert(str) {
+    var date = new Date(str),
+        mnth = ("0" + (date.getMonth()+1)).slice(-2),
+        day  = ("0" + date.getDate()).slice(-2);
+        hours  = ("0" + date.getHours()).slice(-2);
+        minutes = ("0" + date.getMinutes()).slice(-2);
+    return [ date.getFullYear(), mnth, day, hours ].join("-") + [ date.hours, minutes].join(":");
+}
+    %>
     <table style="width:90%">
         <tr>
             <th>id</th>
@@ -80,17 +90,17 @@
                     <%= adsProduct[i].visitTime %>
                 </td>
                 <td>
-                    <%= adsProduct[i].image %>
+                    <img src="<%=adsProduct[i].image %>"/>
                 </td>
                 <td>
-                    <%= adsProduct[i].startedAt %>
+                    <input disabled id="start-date" class="form-control" type="datetime-local"  name="startedAt" value="<%= adsProduct[i].startedAt.toISOString().slice(0,16) %>">
                 </td>
                 <td>
-                    <%= adsProduct[i].finishedAt %>
+                    <input disabled id="finish-date" class="form-control" type="datetime-local"  name="finishedAt" value="<%= adsProduct[i].finishedAt.toISOString().slice(0,16) %>">
                 </td>
                 <td>
-                    <a href="/edit?id=<%= adsProduct[i].id %>" class="btn-edit" type="button">Edit</a>
-                    <a href="/delete?id=<%= adsProduct[i].id %>" class="btn-delete" type="button">Delete</a>
+                    <a href="/admin/edit-ads?id=<%= adsProduct[i].id %>" class="btn-edit" type="button">Edit</a>
+                    <a href="/admin/delete-ads?id=<%= adsProduct[i].id %>" class="btn-delete" type="button">Delete</a>
                 </td>
 
             </tr>
