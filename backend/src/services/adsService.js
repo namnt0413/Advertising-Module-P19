@@ -60,21 +60,29 @@ let createAds = (data) => {
 }
 
 let createAdsProduct = (data) => {
-    console.log(data);
+    // console.log(data);
     return new Promise( async (resolve, reject) => {
         try {
-            let products = data.product
-            let result = []
-            products.map( item => {
-                let object = {};
-                object.ads_id = data.id;
-                object.product_id = item;
-                return result.push(object);
-            })
-            console.log(result)
-            if(products && products.length > 0){
-                await db.ads_product.bulkCreate(result);
-            }  
+            if( data.type == 4) {
+                let products = data.product
+                let result = []
+                products.map( item => {
+                    let object = {};
+                    object.ads_id = data.id;
+                    object.product_id = item;
+                    return result.push(object);
+                })
+                // console.log(result)
+                if(products && products.length > 0){
+                    await db.ads_product.bulkCreate(result);
+                }  
+            } else {
+                await db.ads_product.create({
+                    product_id: data.product,
+                    ads_id: data.id
+                });
+            }
+
             resolve({
                 error_code: 0,
                 error_msg: 'Create products in advertisement successfully'
@@ -131,20 +139,7 @@ let updateAds = (data) => {
                 raw: false // tat hien thi object cua sequelize di
             })
 
-           if( advertisement.type == 1 ){
-                advertisement.name = data.name;
-                advertisement.content = data.content;
-                advertisement.product_id = data.product_id;
-                advertisement.startedAt = data.startedAt;
-                advertisement.finishedAt = data.finishedAt;
-
-                await advertisement.save(); // luu vao database , doc docs
-                resolve({
-                    error_code: 0,
-                    error_msg: 'Update advertisement successfully'
-                })
-
-           } else if ( advertisement.type == 2 ) {
+            if( advertisement.type == 4 ){
                 advertisement.name = data.name;
                 advertisement.content = data.content;
                 advertisement.startedAt = data.startedAt;
@@ -162,18 +157,31 @@ let updateAds = (data) => {
                 })
                 // console.log(result)
                 if(products && products.length > 0){
+                    await db.ads_product.destroy({
+                        where: { ads_id : data.id},
+                    })
                     await db.ads_product.bulkCreate(result);
                 }  
-                resolve({
-                    error_code: 0,
-                    error_msg: 'Update advertisement successfully'
-                })
-           } else {
-                resolve({
-                    error_code: 1,
-                    error_msg: 'Update advertisement failed'
-                });
-           } 
+
+            } else {
+               advertisement.name = data.name;
+               advertisement.content = data.content;
+               advertisement.startedAt = data.startedAt;
+               advertisement.finishedAt = data.finishedAt;
+               await advertisement.save(); // luu vao database , doc docs
+               
+               let adsProduct = await db.ads_product.findOne({
+                    where: { ads_id : data.id},
+                    raw: false 
+               })
+                adsProduct.product_id = data.product_id
+                adsProduct.save();
+
+            } 
+            resolve({
+                error_code: 0,
+                error_msg: 'Update advertisement successfully'
+            })
         } catch (e) {
             reject(e);
         }
@@ -192,7 +200,7 @@ let editAds = (adsId) => {
                 nest: true,
 
             })
-
+            // console.log(ads.adsData)
             if(ads){
                 resolve(ads);
             }

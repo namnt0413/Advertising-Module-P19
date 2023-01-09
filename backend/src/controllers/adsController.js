@@ -71,7 +71,7 @@ let deleteAds = async (req, res) => {
 let editAds = async (req, res) => {
     
     let data = await adsService.editAds(req.query.id);
-    // console.log((data.adsData))
+    // console.log((data))
     return res.render('edit.ejs', {
         ads: data
     }) 
