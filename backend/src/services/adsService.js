@@ -1,4 +1,4 @@
-import db from '../models/index';
+import db, { sequelize } from '../models/index';
 require('dotenv').config();
 import _, { result } from 'lodash';
 
@@ -10,13 +10,25 @@ let getAllAds = () => {
                     exclude: ['createdAt','updatedAt']
                 }
             });
-            // if(data && data.length > 0) {
-            //     data.map( item => {
-            //         item.image = Buffer.from(item.image,'base64').toString('binary'); // convert image to base64
-            //         return item;
-            //     })
-            // }
-            // console.log(data);
+            resolve(data)
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let getCurrentAds = () => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            let data = await db.Advertisement.findAll({
+                where: sequelize.where( "finishedAt" , '>=', sequelize.fn('now'))
+             });
+
+            // const items = await table.findAll({
+            //     where: Sequelize.where(Sequilize.literal('FROM_UNIXTIME(createdDate) + interval 6 hour'), '<=', Sequelize.fn('now'))
+            //   })
+            console.log(data)
             resolve(data)
 
         } catch (error) {
@@ -383,6 +395,6 @@ let getDetailAdsApi = (adsId) => {
 
 
 module.exports = {
-    getAllAds, createAds, createAdsProduct,  deleteAds, updateAds, editAds,
+    getAllAds, getCurrentAds , createAds, createAdsProduct,  deleteAds, updateAds, editAds,
     createAdsApi, getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
 }

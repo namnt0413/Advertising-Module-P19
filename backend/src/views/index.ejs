@@ -65,41 +65,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <div class="row">
-                            <form action="/create-ads-product" method="POST">
-                                <%  if (ads.type == 1) {     %>
-                                          <legend>Sản phẩm mới ra mắt</legend>
-                                <%  } else if (ads.type == 2) {      %>
-                                            <legend>Sản phẩm bán chạy trong tháng</legend>
-                                <%  } else if (ads.type == 3) {     %>
-                                            <legend>Sản phẩm đang giảm giá</legend>
-                                <%  }   else  {   %>
-                                            <legend>Sự kiện đặc biệt</legend>
-                                <%    }     %>
-                
-                                <% if(ads.type == 4) { %>
-                                <select id="product"  name="product" class="form-control" multiple>
-                                <% } else { %>
-                                <select id="product"  name="product" class="form-control">
-                                <% } %>
-                                    <%
-                                        var object = [ 
-                                            {id:  1, name : 'Iphone'} , 
-                                            {id:  2, name : 'Samsung'} ,
-                                            {id:  3, name : 'Oppo'} ,
-                                            {id:  4, name : 'Xiaomi'} ,
-                                            {id:  5, name : 'Nokia'} ,
-                                        ]
-                                        for ( var i = 0; i < object.length; i++ ) {
-                                    %>
-                                            <option value="<%=object[i].id %>"><%=object[i].id %> - <%=object[i].name %></option>
-                                    <%  }   %>
-                                </select>
-                                <input type="text" name="id" value="<%=ads.id %>" hidden>
-                                <input type="text" name="type" value="<%=ads.type %>" hidden>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
+                        
                     </div>
                 </main>
 
