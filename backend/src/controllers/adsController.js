@@ -8,9 +8,7 @@ let index = (req, res) => {
 let guest = async (req, res) => {
     try {
         let data = await adsService.getCurrentAds();
-        // console.log('-------------------------------------');
         // console.log(data);
-        // console.log('-------------------------------------');
         return res.render('guest.ejs', {
             ads: data
         })

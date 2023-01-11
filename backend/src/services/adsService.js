@@ -1,3 +1,5 @@
+
+
 import db, { sequelize } from '../models/index';
 require('dotenv').config();
 import _, { result } from 'lodash';
@@ -20,10 +22,14 @@ let getAllAds = () => {
 
 let getCurrentAds = () => {
     return new Promise( async (resolve, reject) => {
+        const { QueryTypes } = require('sequelize');
         try {
-            let data = await db.Advertisement.findAll({
-                where: sequelize.where( "finishedAt" , '>=', sequelize.fn('now'))
-             });
+            // let data = await db.Advertisement.findAll({
+            //     where: sequelize.where( "finishedAt" , '>=', sequelize.fn('now'))
+            //  });
+             let data = await sequelize.query("SELECT * FROM `Advertisements` WHERE `finishedAt` > NOW()", {
+                type: QueryTypes.SELECT
+              });
 
             // const items = await table.findAll({
             //     where: Sequelize.where(Sequilize.literal('FROM_UNIXTIME(createdDate) + interval 6 hour'), '<=', Sequelize.fn('now'))

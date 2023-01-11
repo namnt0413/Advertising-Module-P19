@@ -11699,3 +11699,42 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #027d88;
+  padding: 75px 50px;
+}
+
+.slick-slide a {
+  color: white;
+  font-size: 16px;
+  /*font-family:myriad-pro, sans-serif;*/
+  font-family: "PT Sans", sans-serif;
+}
+
+.slick-slide p {
+  line-height: 24px;
+}
+
+.slick-slide p:last-of-type {
+  margin-bottom: 0;
+}
+
+.slick-slide p:first-of-type {
+  font-weight: bold;
+}
+
+.slick-next:before {
+  position: relative;
+  top: -15px;
+  content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1552126/right-carousel-arrow.png");
+}
+
+.slick-prev:before {
+  position: relative;
+  top: -15px;
+  right:20px;
+  content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1552126/left-carousel-arrow.png");
+}

@@ -20,10 +20,13 @@ let initWebRoutes = (app) => {
     router.get('/delete-ads', adsController.deleteAds);
 
     router.post('/api/create-ads', adsController.createAdsApi);
-    router.get('/api/all-ads', adsController.getAllAdsApi);
     router.delete('/api/delete-ads', adsController.deleteAdsApi);
     router.put('/api/update-ads', adsController.updateAdsApi);
     router.get('/api/detail-ads', adsController.getDetailAdsApi);
+
+    router.get('/api/all-ads', adsController.getAllAdsApi);
+    router.get('/api/current-ads', adsController.getCurrentAdsApi);
+
 
     return app.use("/", router);
 }
