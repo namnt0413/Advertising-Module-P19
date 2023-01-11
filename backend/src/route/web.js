@@ -25,7 +25,7 @@ let initWebRoutes = (app) => {
     router.get('/api/detail-ads', adsController.getDetailAdsApi);
 
     router.get('/api/all-ads', adsController.getAllAdsApi);
-    router.get('/api/current-ads', adsController.getCurrentAdsApi);
+    // router.get('/api/current-ads', adsController.getCurrentAdsApi);
 
 
     return app.use("/", router);
