@@ -1,6 +1,29 @@
 import db from '../models/index';
 import adsService from '../services/adsService'
 
+let index = (req, res) => {
+    return res.render('index.ejs');
+}
+
+let guest = async (req, res) => {
+    try {
+        let data = await adsService.getCurrentAds();
+        // console.log('-------------------------------------');
+        // console.log(data);
+        // console.log('-------------------------------------');
+        return res.render('guest.ejs', {
+            ads: data
+        })
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            error_code: -1,
+            error_msg: 'Error from server'
+        })
+    }
+}
+
+
 let getAllAds = async (req, res) => {
     try {
         let data = await adsService.getAllAds();
@@ -172,6 +195,6 @@ let getDetailAdsApi = async (req, res) => {
 
 
 module.exports = {
-    getAllAds, addAds , createAds , createAdsProduct,  deleteAds, updateAds , editAds ,
+    index ,guest ,getAllAds, addAds , createAds , createAdsProduct,  deleteAds, updateAds , editAds ,
     createAdsApi , getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
 }

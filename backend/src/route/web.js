@@ -7,19 +7,20 @@ var upload = multer({ dest: './src/public/uploads/' })
 let router = express.Router();
 
 let initWebRoutes = (app) => {
+    router.get('/', adsController.index);
+    router.get('/guest-ads', adsController.guest);
 
-    router.get('/admin/get-all-ads', adsController.getAllAds);
+    router.get('/all-ads', adsController.getAllAds);
+    router.get('/add-ads', adsController.addAds);    
+    router.post('/create-ads', upload.single('image') , adsController.createAds);
+    router.post('/create-ads-product', adsController.createAdsProduct);
 
-    router.get('/admin/add-ads', adsController.addAds);    
-    router.post('/admin/create-ads', upload.single('image') , adsController.createAds);
-    router.post('/admin/create-ads-product', adsController.createAdsProduct);
-
-    router.get('/admin/edit-ads', adsController.editAds);
-    router.post('/admin/update-ads', upload.single('image') , adsController.updateAds);
-    router.get('/admin/delete-ads', adsController.deleteAds);
+    router.get('/edit-ads', adsController.editAds);
+    router.post('/update-ads', upload.single('image') , adsController.updateAds);
+    router.get('/delete-ads', adsController.deleteAds);
 
     router.post('/api/create-ads', adsController.createAdsApi);
-    router.get('/api/get-all-ads', adsController.getAllAdsApi);
+    router.get('/api/all-ads', adsController.getAllAdsApi);
     router.delete('/api/delete-ads', adsController.deleteAdsApi);
     router.put('/api/update-ads', adsController.updateAdsApi);
     router.get('/api/detail-ads', adsController.getDetailAdsApi);
