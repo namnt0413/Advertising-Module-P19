@@ -2,7 +2,7 @@ import express from "express";
 import adsController from "../controllers/adsController";
 
 var multer = require('multer')
-var upload = multer({ dest: './src/public/uploads/' })
+var upload = multer({ dest: './public/uploads/' })
 
 let router = express.Router();
 
