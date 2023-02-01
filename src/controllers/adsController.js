@@ -104,7 +104,8 @@ let editAds = async (req, res) => {
 let updateAds = async (req, res) => {
     try {
         ( req.file !== undefined ) ?
-            ( req.body.image = '\\' + req.file.path.split('\\').slice(2).join('\\') ) : (req.body.image = '');
+            ( req.body.image = '\\' + req.file.path.split('\\').slice(0).join('\\') ) : (req.body.image = '');
+        console.log(req.file.path)
         
         let data = req.body;
         // console.log(data)
