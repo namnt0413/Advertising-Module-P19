@@ -88,10 +88,6 @@
                                         <label>Ten quang cao</label>
                                         <input id ="ads-name" type="text" class="form-control" name="name" value="<%= ads.name %>">
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="image">Anh</label>
-                                        <input type="file" class="form-control" name="image" placeholder="image" value="">
-                                    </div>
                                 </div>
                                 <div class="row align-center">
                                     <div class="form-group col-md-12">
@@ -108,6 +104,16 @@
                                     <div class="form-group col-md-6">
                                         <label for="start-date">Ngay ket thuc</label>
                                         <input id="finish-date" class="form-control" type="datetime-local"  name="finishedAt" value="<%= ads.finishedAt.toISOString().slice(0,16) %>">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="image">Anh</label><br>
+                                        <img src="<%=ads.image %>" style="width: 50%;height:auto;text-align:center"/>
+                                        <input type="file" class="form-control" name="image" placeholder="image" value="<%= ads.image %>" style="width:50%">
+                                    </div>
+                                    <div class="form-group col-md-6">
                                     </div>
                                 </div>
                 
