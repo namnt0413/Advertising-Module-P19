@@ -4,6 +4,13 @@ import adsController from "../controllers/adsController";
 var multer = require('multer')
 var upload = multer({ dest: './src/public/uploads/' })
 
+const Multer = multer({
+    storage: multer.memoryStorage(),
+    limits: 1024 * 1024
+})
+
+const uploadImage = require("../services/firebase")
+
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -12,11 +19,12 @@ let initWebRoutes = (app) => {
 
     router.get('/all-ads', adsController.getAllAds);
     router.get('/add-ads', adsController.addAds);    
-    router.post('/create-ads', upload.single('image') , adsController.createAds);
+    router.post('/create-ads', Multer.single('image'), uploadImage , adsController.createAds);
+
     router.post('/create-ads-product', adsController.createAdsProduct);
 
     router.get('/edit-ads', adsController.editAds);
-    router.post('/update-ads', upload.single('image') , adsController.updateAds);
+    router.post('/update-ads',  Multer.single('image'), uploadImage , adsController.updateAds);
     router.get('/delete-ads', adsController.deleteAds);
 
     router.post('/api/create-ads', adsController.createAdsApi);
