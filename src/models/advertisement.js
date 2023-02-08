@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     product_id: DataTypes.INTEGER,
     startedAt: DataTypes.STRING,
     finishedAt: DataTypes.STRING,
+    status: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Advertisement',

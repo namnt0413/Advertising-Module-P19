@@ -166,6 +166,7 @@ let updateAds = (data) => {
 
             if( advertisement.type == 4 ){
                 advertisement.name = data.name;
+                advertisement.status = data.status;
                 advertisement.image = data.image;
                 advertisement.content = data.content;
                 advertisement.startedAt = data.startedAt;
@@ -191,6 +192,7 @@ let updateAds = (data) => {
 
             } else {
                advertisement.name = data.name;
+               advertisement.status = data.status;
                advertisement.image = data.image;
                advertisement.content = data.content;
                advertisement.startedAt = data.startedAt;
