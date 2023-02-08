@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     visitTime: DataTypes.INTEGER,
     image: DataTypes.STRING,
     type: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
     startedAt: DataTypes.STRING,
     finishedAt: DataTypes.STRING,
     status: DataTypes.INTEGER,
