@@ -1,8 +1,11 @@
 import db from '../models/index';
 import adsService from '../services/adsService'
 
-let index = (req, res) => {
-    return res.render('index.ejs');
+let index = async (req, res) => {
+    let data = await adsService.getAllAds();
+    return res.render('index.ejs', {
+        adsProduct: data
+    })
 }
 
 let guest = async (req, res) => {
@@ -65,8 +68,10 @@ let createAds = async (req, res) => {
 let createAdsProduct = async (req, res) => {
     try {
         let response = await adsService.createAdsProduct(req.body);
-        return res.status(200).json(response)
-        // return res.render('add_product.ejs')
+        let data = await adsService.getAllAds();
+        return res.render('show.ejs', {
+            adsProduct: data
+        })
     } catch (error) {
         console.error(error);
         return res.status(200).json({
@@ -79,7 +84,10 @@ let createAdsProduct = async (req, res) => {
 let deleteAds = async (req, res) => {
     try {
         let response = await adsService.deleteAds(req.query.id);
-        return res.status(200).json(response)
+        let data = await adsService.getAllAds();
+        return res.render('show.ejs', {
+            adsProduct: data
+        })
     } catch (error) {
         console.error(error);
         return res.status(200).json({
@@ -107,7 +115,10 @@ let updateAds = async (req, res) => {
         
         let data = req.body;
         let response = await adsService.updateAds(data);
-        return res.status(200).json(response)
+        let adsProduct = await adsService.getAllAds();
+        return res.render('show.ejs', {
+            adsProduct: adsProduct
+        })
     } catch (error) {
         console.error(error);
         return res.status(200).json({

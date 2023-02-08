@@ -167,7 +167,7 @@
                                             <th style="width:50px">id</th>
                                             <th>Name</th>
                                             <th style="max-width: 220px;">Content</th>
-                                            <th style="width:65px">Visit Time</th>
+                                            <th style="width:65px">Status</th>
                                             <th style="width:75px">Image</th>
                                             <th>Started At</th>
                                             <th>Finished At</th>
@@ -188,7 +188,11 @@
                                                     <%= adsProduct[i].content %>
                                                 </td>
                                                 <td>
-                                                    <%= adsProduct[i].visitTime %>
+                                                    <% if (adsProduct[i].status == 1) { %>
+                                                        <span class="btn btn-success" style="font-size:12px;padding:3px">Showing</span>
+                                                    <% } else { %>
+                                                        <span class="btn btn-danger" style="font-size:12px;padding:3px">Hiding</span>
+                                                    <% } %>
                                                 </td>
                                                 <td>
                                                     <img src="<%=adsProduct[i].image %>" style="width: 100%;height:auto"/>
