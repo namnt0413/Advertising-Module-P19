@@ -83,17 +83,10 @@
                                 <select id="product"  name="product" class="form-control">
                                 <% } %>
                                     <%
-                                        var object = [ 
-                                            {id:  1, name : 'Iphone'} , 
-                                            {id:  2, name : 'Samsung'} ,
-                                            {id:  3, name : 'Oppo'} ,
-                                            {id:  4, name : 'Xiaomi'} ,
-                                            {id:  5, name : 'Nokia'} ,
-                                        ]
-                                        for ( var i = 0; i < object.length; i++ ) {
+                                        products.forEach( product => {
                                     %>
-                                            <option value="<%=object[i].id %>"><%=object[i].id %> - <%=object[i].name %></option>
-                                    <%  }   %>
+                                            <option value="<%=product.id %>"><%=product.id %> - <%=product.name %></option>
+                                    <%  })   %>
                                 </select>
                                 <input type="text" name="id" value="<%=ads.id %>" hidden>
                                 <input type="text" name="type" value="<%=ads.type %>" hidden>
