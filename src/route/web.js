@@ -31,9 +31,7 @@ let initWebRoutes = (app) => {
     router.put('/api/update-ads', adsController.updateAdsApi);
     router.get('/api/detail-ads', adsController.getDetailAdsApi);
 
-    router.get('/api/all-ads', adsController.getAllAdsApi);
-    // router.get('/api/current-ads', adsController.getCurrentAdsApi);
-
+    router.get('/api/curent-ads', adsController.getCurrentAds);
 
     return app.use("/", router);
 }

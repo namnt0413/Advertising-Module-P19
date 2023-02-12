@@ -200,8 +200,20 @@ let getDetailAdsApi = async (req, res) => {
     // return res.render('homepage.ejs')
 }
 
+let getCurrentAds = async (req, res) => {
+    try {
+        let response = await adsService.getCurrentAds();
+        return res.status(200).json(response)
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({
+            error_code: -1,
+            error_msg: 'Error from server'
+        })
+    }
+}
 
 module.exports = {
     index ,guest ,getAllAds, addAds , createAds , createAdsProduct,  deleteAds, updateAds , editAds ,
-    createAdsApi , getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi
+    createAdsApi , getAllAdsApi, deleteAdsApi, updateAdsApi, getDetailAdsApi, getCurrentAds
 }
