@@ -131,21 +131,15 @@
                                             <% if(ads.type == 4) { %>
                                                 <select id="product"  name="product" class="form-control" multiple>
                                                     <%
-                                                        var object = [ 
-                                                            {id:  1, name : 'Iphone'} , 
-                                                            {id:  2, name : 'Samsung'} ,
-                                                            {id:  3, name : 'Oppo'} ,
-                                                            {id:  4, name : 'Xiaomi'} ,
-                                                            {id:  5, name : 'Nokia'} ,
-                                                        ]
-                                                        for ( var i = 0; i < object.length; i++ ) {
+                                                        products.forEach( product => {
                                                             var selected = "" 
                                                             ads.adsData.map( item => {
-                                                                if (item.product_id === object[i].id ) selected="selected"; return selected;
+                                                                if (item.product_id === product.id ) selected="selected"; return selected;
                                                             })
+
                                                     %>
-                                                            <option value="<%=object[i].id %>" <%=selected%>><%=object[i].id %> - <%=object[i].name %></option>
-                                                    <%  }   %>
+                                                            <option value="<%=product.id %>" <%=selected%>><%=product.id %> - <%=product.name %></option>
+                                                    <%  })   %>
                                                     </select>
                                             <% } else { %>
                                                 <select id="product_id"  name="product_id" class="form-control">
@@ -157,14 +151,14 @@
                                                         {id:  4, name : 'Xiaomi'} ,
                                                         {id:  5, name : 'Nokia'} ,
                                                     ]
-                                                    for ( var i = 0; i < object.length; i++ ) {
+                                                    products.forEach( product => {
                                                         var selected = "" 
                                                         ads.adsData.map( item => {
-                                                            if (item.product_id === object[i].id ) selected="selected"; return selected;
+                                                            if (item.product_id === product.id ) selected="selected"; return selected;
                                                         })
                                                 %>
-                                                        <option value="<%=object[i].id %>" <%= selected %>><%=object[i].id %> - <%=object[i].name %></option>
-                                                <%  }   %>
+                                                        <option value="<%=product.id %>" <%= selected %>><%=product.id %> - <%=product.name %></option>
+                                                <%  })   %>
                                                 </select>
                                             <% } %>
                 
