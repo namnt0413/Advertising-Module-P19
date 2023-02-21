@@ -123,12 +123,33 @@
                                     </div>
                                 </div>
                 
+                            <%  if(ads.type == 4) { %>
+                                <div class="col-12 mt-5">
+                                    <h3>Danh sach Voucher hien tai</h3>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Voucher</label>
+                                            <select id="voucher_id"  name="voucher_id" class="form-control">
+                                            <%
+                                                vouchers.forEach( voucher => {
+                                                    var selected = ""
+                                                    ads.adsVoucherData.map( item => {
+                                                        if (item.voucher_id === voucher.id ) selected="selected"; return selected;
+                                                    })
+                                            %>
+                                                    <option value="<%=voucher.id %>" <%= selected %>><%=voucher.id %> - <%=voucher.titlle %></option>
+                                            <%  })   %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } else { %>
                                 <div class="col-12 mt-5">
                                     <h3>San pham trong su kien</h3>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="inputState">San pham</label>
-                                            <% if(ads.type == 4) { %>
+                                            <% if(ads.type == 5) { %>
                                                 <select id="product"  name="product" class="form-control" multiple>
                                                     <%
                                                         products.forEach( product => {
@@ -144,13 +165,6 @@
                                             <% } else { %>
                                                 <select id="product_id"  name="product_id" class="form-control">
                                                 <%
-                                                    var object = [ 
-                                                        {id:  1, name : 'Iphone'} , 
-                                                        {id:  2, name : 'Samsung'} ,
-                                                        {id:  3, name : 'Oppo'} ,
-                                                        {id:  4, name : 'Xiaomi'} ,
-                                                        {id:  5, name : 'Nokia'} ,
-                                                    ]
                                                     products.forEach( product => {
                                                         var selected = "" 
                                                         ads.adsData.map( item => {
@@ -161,11 +175,10 @@
                                                 <%  })   %>
                                                 </select>
                                             <% } %>
-                
                                         </div>
                                     </div>
                                 </div>
-                
+                            <% } %>
                                 <input type="text" name="id" value="<%=ads.id %>" hidden>
                                 <input type="text" name="type" value="<%=ads.type %>" hidden>
                                 <button type="submit" class="btn btn-primary">Submit</button>
