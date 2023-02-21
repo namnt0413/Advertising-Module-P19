@@ -1,6 +1,6 @@
 import db from '../models/index';
 import adsService from '../services/adsService'
-import fetch from 'node-fetch';
+var fetch = require('node-fetch');
 
 let index = async (req, res) => {
     let data = await adsService.getAllAds();
