@@ -66,30 +66,16 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="row">
-                            <form action="/create-ads-product" method="POST">
-                                <%  if (ads.type == 1) {     %>
-                                          <legend>Sản phẩm mới ra mắt</legend>
-                                <%  } else if (ads.type == 2) {      %>
-                                            <legend>Sản phẩm bán chạy trong tháng</legend>
-                                <%  } else if (ads.type == 3) {     %>
-                                            <legend>Sản phẩm đang giảm giá</legend>
-                                <%  }   else  {   %>
-                                            <legend>Sự kiện đặc biệt</legend>
-                                <%    }     %>
-                
-<<<<<<< HEAD
-                                <% if(ads.type == 5) { %>
-=======
-                                <% if(ads.type == 4) { %>
->>>>>>> e32f480d631f590c9606684edca19352aa212ee1
-                                <select id="product"  name="product" class="form-control" multiple>
-                                <% } else { %>
-                                <select id="product"  name="product" class="form-control">
-                                <% } %>
+                            <form action="/create-ads-voucher" method="POST">
+                                <%  if (ads.type == 4) {     %>
+                                          <legend>Các voucher hiện tại</legend>
+                                <%  }  %>
+
+                                <select id="voucher"  name="voucher" class="form-control">
                                     <%
-                                        products.forEach( product => {
+                                        vouchers.forEach( voucher => {
                                     %>
-                                            <option value="<%=product.id %>"><%=product.id %> - <%=product.name %></option>
+                                            <option value="<%=voucher.id %>"><%=voucher.id %> - <%=voucher.titlle %></option>
                                     <%  })   %>
                                 </select>
                                 <input type="text" name="id" value="<%=ads.id %>" hidden>
