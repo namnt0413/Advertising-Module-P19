@@ -54,7 +54,6 @@ let getCurrentAds = () => {
 
 let createAds = (data) => {
     return new Promise( async (resolve, reject) => {
-        console.log(data);
         try {
             if( !data.name || !data.content || !data.type || !data.startedAt || !data.finishedAt ) {
                 resolve({
@@ -91,7 +90,7 @@ let createAds = (data) => {
 let createAdsProduct = (data) => {
     return new Promise( async (resolve, reject) => {
         try {
-            if( data.type == 4) {
+            if( data.type == 5) {
                 let products = data.product
                 let result = []
                 products.map( item => {
@@ -122,6 +121,25 @@ let createAdsProduct = (data) => {
     })
 }
 
+let createAdsVoucher = (data) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            await db.ads_voucher.create({
+                voucher_id: data.voucher,
+                ads_id: data.id
+            });
+
+            resolve({
+                error_code: 0,
+                error_msg: 'Create products in advertisement successfully'
+            })
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 let deleteAds = (adsId) => {
     return new Promise( async (resolve, reject) => {
         try {
@@ -134,15 +152,19 @@ let deleteAds = (adsId) => {
                     error_msg:`The advertisement isn't exist`
                 })
             }
-            // await user.destroy(); khong sd duoc vi da config lai sequelize ra dang object raw o nodejs
-            // con ham duoi chay duoc vi xoa truc tiep o db
+
             await db.Advertisement.destroy({
                 where: { id : adsId }
             })
-            await db.ads_product.destroy({
-                where: { ads_id : adsId }
-            })
-
+            if(advertisement.type ==4 ) {
+                await db.ads_voucher.destroy({
+                    where: { ads_id : adsId }
+                })
+            } else {
+                await db.ads_product.destroy({
+                    where: { ads_id : adsId }
+                })
+            }
             resolve({
                 error_code:0,
                 error_msg:`The advertisement was deleted`
@@ -173,7 +195,7 @@ let updateAds = (data) => {
                 data.image = advertisement.image ;
             }
 
-            if( advertisement.type == 4 ){
+            if( advertisement.type == 5 ){
                 advertisement.name = data.name;
                 advertisement.status = data.status;
                 advertisement.image = data.image;
@@ -199,6 +221,21 @@ let updateAds = (data) => {
                     await db.ads_product.bulkCreate(result);
                 }  
 
+            } else if(advertisement.type == 4) {
+                advertisement.name = data.name;
+                advertisement.status = data.status;
+                advertisement.image = data.image;
+                advertisement.content = data.content;
+                advertisement.startedAt = data.startedAt;
+                advertisement.finishedAt = data.finishedAt;
+                await advertisement.save(); // luu vao database , doc docs
+                
+                let adsVoucher = await db.ads_voucher.findOne({
+                        where: { ads_id : data.id},
+                        raw: false 
+                })
+                adsVoucher.voucher_id = data.voucher_id
+                adsVoucher.save();
             } else {
                advertisement.name = data.name;
                advertisement.status = data.status;
@@ -214,8 +251,8 @@ let updateAds = (data) => {
                })
                 adsProduct.product_id = data.product_id
                 adsProduct.save();
-
             } 
+
             resolve({
                 error_code: 0,
                 error_msg: 'Update advertisement successfully'
@@ -233,6 +270,7 @@ let editAds = (adsId) => {
                 where:{ id : adsId},
                 include: [
                     { model: db.ads_product, as: 'adsData', attributes: ['product_id'] },
+                    { model: db.ads_voucher, as: 'adsVoucherData', attributes: ['voucher_id'] },
                 ],
                 raw: false,
                 nest: true,
@@ -253,5 +291,5 @@ let editAds = (adsId) => {
 }
 
 module.exports = {
-    getAllAds, getCurrentAds , createAds, createAdsProduct,  deleteAds, updateAds, editAds,
+    getAllAds, getCurrentAds , createAds, createAdsProduct,  deleteAds, updateAds, editAds, createAdsVoucher
 }

@@ -21,6 +21,7 @@ let initWebRoutes = (app) => {
     router.get('/add-ads', adsController.addAds);    
     router.post('/create-ads', Multer.single('image'), uploadImage , adsController.createAds);
     router.post('/create-ads-product', adsController.createAdsProduct);
+    router.post('/create-ads-voucher', adsController.createAdsVoucher);
     router.get('/edit-ads', adsController.editAds);
     router.post('/update-ads',  Multer.single('image'), uploadImage , adsController.updateAds);
     router.get('/delete-ads', adsController.deleteAds);

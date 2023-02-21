@@ -1,19 +1,27 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <title>Dashboard - SP19</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 
+    <style>
+        .form-group {
+            padding: 10px;
+        }
+        .form-group label {
+            margin: 10px 0 5px 0;
+        }
+
+    </style>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand--> 
@@ -69,17 +77,120 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <div class="grid wide">
-                            <div class="row">
+                        <div class="row">
+                            <form action="/update-ads" enctype="multipart/form-data" method="POST">
+                                <div class="row align-center">
+                                    <div class="col-12 mt-3">
+                                        <h3>Chinh sua Quang cao</h3>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Ten quang cao</label>
+                                        <input id ="ads-name" type="text" class="form-control" name="name" value="<%= ads.name %>">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Trang thai</label>
+                                        <select id ="ads-status" class="form-control" name="status">
+                                            <option <%= ads.status==1 ? "selected" : "" %> value="1">Show</option>
+                                            <option <%= ads.status==0 ? "selected" : "" %> value="0">Hide</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-center">
+                                    <div class="form-group col-md-12">
+                                        <label for="ads-content">Noi dung</label>
+                                        <input id="ads-content" type="text" class="form-control" name="content" placeholder="Content" value="<%= ads.content %>">
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="start-date">Ngay bat dau</label>
+                                        <input id="start-date" class="form-control" type="datetime-local"  name="startedAt" value="<%= ads.startedAt.toISOString().slice(0,16) %>">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="start-date">Ngay ket thuc</label>
+                                        <input id="finish-date" class="form-control" type="datetime-local"  name="finishedAt" value="<%= ads.finishedAt.toISOString().slice(0,16) %>">
+                                    </div>
+                                </div>
 
-                            </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="image">Anh</label><br>
+                                        <img src="<%=ads.image %>" style="width: 50%;height:auto;text-align:center"/>
+                                        <input type="file" class="form-control" name="image" placeholder="image" value="<%= ads.image %>" style="width:50%">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                    </div>
+                                </div>
+                
+                            <%  if(ads.type == 4) { %>
+                                <div class="col-12 mt-5">
+                                    <h3>Danh sach Voucher hien tai</h3>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Voucher</label>
+                                            <select id="voucher_id"  name="voucher_id" class="form-control">
+                                            <%
+                                                vouchers.forEach( voucher => {
+                                                    var selected = ""
+                                                    ads.adsVoucherData.map( item => {
+                                                        if (item.voucher_id === voucher.id ) selected="selected"; return selected;
+                                                    })
+                                            %>
+                                                    <option value="<%=voucher.id %>" <%= selected %>><%=voucher.id %> - <%=voucher.titlle %></option>
+                                            <%  })   %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="col-12 mt-5">
+                                    <h3>San pham trong su kien</h3>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">San pham</label>
+                                            <% if(ads.type == 5) { %>
+                                                <select id="product"  name="product" class="form-control" multiple>
+                                                    <%
+                                                        products.forEach( product => {
+                                                            var selected = "" 
+                                                            ads.adsData.map( item => {
+                                                                if (item.product_id === product.id ) selected="selected"; return selected;
+                                                            })
+
+                                                    %>
+                                                            <option value="<%=product.id %>" <%=selected%>><%=product.id %> - <%=product.name %></option>
+                                                    <%  })   %>
+                                                    </select>
+                                            <% } else { %>
+                                                <select id="product_id"  name="product_id" class="form-control">
+                                                <%
+                                                    products.forEach( product => {
+                                                        var selected = "" 
+                                                        ads.adsData.map( item => {
+                                                            if (item.product_id === product.id ) selected="selected"; return selected;
+                                                        })
+                                                %>
+                                                        <option value="<%=product.id %>" <%= selected %>><%=product.id %> - <%=product.name %></option>
+                                                <%  })   %>
+                                                </select>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                                <input type="text" name="id" value="<%=ads.id %>" hidden>
+                                <input type="text" name="type" value="<%=ads.type %>" hidden>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </main>
+
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="./main.js"></script>
+
     </body>
 </html>
