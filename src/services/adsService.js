@@ -39,6 +39,7 @@ let getCurrentAds = () => {
                 } ,
                 include: [
                     { model: db.ads_product, as: 'adsData', attributes: ['product_id'] },
+                    { model: db.ads_voucher, as: 'adsVoucherData', attributes: ['voucher_id'] },
                 ],
                 raw: false,
                 nest: true,
